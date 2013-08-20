@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <title>Partial.js</title>
+  <meta name="description" content="@@description">
+  <meta name="author" content="Serkan">
+  <meta name="keywords" content="" />
+  <meta name="generator" content="haroopad" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <style>footer{position:fixed;font-size:.8em;text-align:right;bottom:0;margin-left:-25px;height:20px;width:100%}</style>
+</head>
+<body class="markdown github">
+
+
+<h1>Partial.js</h1><p>Partial.js MVC tabanlı bir node.js framework'üdür. Bir çok özelliği barındıran framework hem işlevsel olarak yetenekli hemde öğrenilmesi kolaydır. Framework dahilinde cache desteği, websocket desteği, server events, logging, authorization gibi birçok desteği mevcuttu.</p><h2>Kurulum</h2><p>Framework'ü kurmak için npm kullanabiliyoruz. npm ile kurmak için;</p><pre><code origin="&lt;pre&gt;&lt;code&gt;npm install -g partial.js
+&lt;/code&gt;&lt;/pre&gt;"><span class="title">npm</span> install -g partial.js
+</code></pre><p>Kurulum işlemi tamamlandıktan sonra framework'ü kurmak istediğimiz klasöre geçip;</p><pre><code origin="&lt;pre&gt;&lt;code&gt;partial.js
+&lt;/code&gt;&lt;/pre&gt;"><span class="keyword">partial</span>.js
+</code></pre><p>komutunu çalıştırıyoruz. Bu komut partial.js framework'ün dosya yapısını bulunulan klasöre oluşturup boş js ve örnek dosyaları yerleştiriyor. Bu işlemler tamamlandıktan sonra bulunduğumuz klasörde ki dosya ve klasör yapısı şu şekilde şekilleniyor.</p><p><img src="D:\serkan\belgelerim\partial.js/dosya_yapisi.png" alt="Alt text"></p><p>Uygulamamızı çalıştırmak için bağlantıyı sürekli açık tutan keepalive.js dosyasını çalıştıracağız bu bize sistemin herhangi bir hata ile karşılaştığında kesilmemesini sağlamak için oluşturulmuş bir dosya. Şu komudu kullanarak framework'ü çalıştırıyoruz.</p><pre><code origin="&lt;pre&gt;&lt;code&gt;node keepalive 3000
+&lt;/code&gt;&lt;/pre&gt;"><span class="title">node</span> keepalive <span class="number">3000</span>
+</code></pre><p>Framework'ümüz hazır ve çalıştı. Şimdi browser adres çubuğuna <a href="http://localhost:3000">http://localhost:3000</a> yazarak framework'ün örnek başlangıç sayfasına ulaşabiliriz.</p><h2>Dosya yapısı</h2><p>Şimdi dosya yapısını inceleyelim. Ana klasörde iki adet dosya bulunmakta. Bunlar config-debug ve config-release bu dosyalar framework‘ün ayar dosyaları. Buraya yazdığımız ayarlara hem biz hemde framework bazı yerlerden ulaşıp değerleri okuyabiliyor. Framework ilk kurulduğunda hep debug modda çalışıyor olacaktır bu sebeple Framework config-debug dosyasında ki ayarları dikkate alacaktır. Release modda çalışır ise config-release dosyası dikkate alınacaktır. Config dosyalarının yapısı içerisinde standart olarak framework’ün kullandığı şu ayarlar mevcuttur.</p><h2>Framework ayarları</h2><p><strong>name:</strong>
+framework'ün ad değeridir.</p><p><strong>version:</strong> framework'ün sürüm numarasını almak için ayarlanır.</p><p><strong>secret:</strong> framework içinde session id gibi değerlerin şifrelenmesi için kullanılır.</p><p>Aşağıdaki ayarlar framework'ün klasör yerlerini ayarlamak için kullanılır.</p><pre><code origin="&lt;pre&gt;&lt;code&gt;directory-contents                 : /contents/
+directory-controllers              : /controllers/
+directory-views                    : /views/
+directory-temp                     : /tmp/
+directory-templates                : /templates/
+directory-resources                : /resources/
+directory-public                   : /public/
+directory-modules                  : /modules/
+directory-logs                     : /logs/
+directory-tests                    : /tests/
+static-url                         :
+static-url-js                      : /js/
+static-url-css                     : /css/
+static-url-image                   : /img/
+static-url-video                   : /video/
+static-url-font                    : /font/
+static-url-upload                  : /upload/
+&lt;/code&gt;&lt;/pre&gt;">directory-contents                 : <span class="regexp">/contents/</span>
+directory-controllers              : <span class="regexp">/controllers/</span>
+directory-views                    : <span class="regexp">/views/</span>
+directory-temp                     : <span class="regexp">/tmp/</span>
+directory-templates                : <span class="regexp">/templates/</span>
+directory-resources                : <span class="regexp">/resources/</span>
+directory-public                   : <span class="regexp">/public/</span>
+directory-modules                  : <span class="regexp">/modules/</span>
+directory-logs                     : <span class="regexp">/logs/</span>
+directory-tests                    : <span class="regexp">/tests/</span>
+static-url                         :
+static-url-js                      : <span class="regexp">/js/</span>
+static-url-css                     : <span class="regexp">/css/</span>
+static-url-image                   : <span class="regexp">/img/</span>
+static-url-video                   : <span class="regexp">/video/</span>
+static-url-font                    : <span class="regexp">/font/</span>
+static-url-upload                  : <span class="regexp">/upload/</span>
+</code></pre><p><strong>static-accepts-custom:</strong> Framework'ün varsayılan kabul edilen dosya uzantılarını belirtmek için kullanılır buraya istenen değer virgül ile eklenebilir varsayılan değer: .mp3,.flv</p><p><strong>default-layout:</strong> Varsayılan tasarım şekli dosyasıdır. Bu dosya framework ilk oluşturulduğunda views klasöründe yer alır. View şemaları bu dosyaya göre tasarlanır. _layout</p><p><strong>default-request-length:</strong> Varsayılan istek uzunluğunu ayarlamak için gerekli ayar değeridir. Varsayılan olarak 5120 bytetır.</p><p><strong>default-websocket-request-length:</strong> Varsayılan websocket istek uzunluğu değeridir. Varsayılan olarak 5120 bytetır.</p><p><strong>default-request-timeout:</strong> İstek zaman aşımı süresidir. Milisaniye cinsindendir. Varsayılan 3000 milisaniyedir.</p><p><strong>allow-gzip:</strong> GZip sıkıştırma kabul edilip edilmeyeceği bu ayardan ayarlanabilir. Varsayılan değer true olarak ayarlanmıştır. NGix web sunucusu kullanıyorsanız bu değeri false yapmanız önerilir.</p><p><strong>allow-websocket:</strong> Websocket kullanımını ayarlamak için kullanılan ayardır. Varsayılan true olarak ayarlanmıştır. Eğer socket.io ile kendiniz haberleşme işlemi yapacaksanız bu değeri false yapmanız önerilir.</p><p>Aşağıdaki ayarların kullanım yerleriyle ilgili bir bilgim yok. İlerleyen günlerde bu değerler ile ilgili bilgi alırsam açıklama yapacağım.</p><pre><code origin="&lt;pre&gt;&lt;code&gt;allow-compile-js                   : true
+allow-compile-css                  : true
+&lt;/code&gt;&lt;/pre&gt;">allow-compile-js                   : <span class="literal">true</span>
+allow-compile-css                  : <span class="literal">true</span>
+</code></pre><p>Framework'ün debug modda çalışacağı framework.run metodunda ki debug parametresinde ayarlanıyor. Bu kod index.js dosyasında şu şekilde yer alıyor.</p><pre><code class="javascript" origin="&lt;pre&gt;&lt;code class=&quot;javascript&quot;&gt;var debug = true;
+framework.run(http, debug, port);
+&lt;/code&gt;&lt;/pre&gt;"><span class="keyword">var</span> debug = <span class="literal">true</span>;
+framework.run(http, debug, port);
+</code></pre><p>Burada ki debug boolean değerini false olarak ayarlarsak framework release modda çalışacaktır.</p><p>Yeri gelmişken belirtelim index.js framework'ümüzün ana kodudur. Her ne kadar node keepalive komutu versekte aslında çalışan ana kod parçası index.js de yer almakta.</p><p>Debug mod ve release mod arasında config dosyasından farklı session sürelerinde ve framework'ün cachelemesinde de değişiklikler olmaktadır.</p><p>Debug modda her 1 dakika da bir iç servislere ait kaynak cacheleri temizlenmekte ve genel cacheleme özelliği pasif olmaktadır.</p><p>Release modda ise Her 20 dakikada bir iç servislere ait kaynak cacheleri temizlenmekte ve framework config dosyalarını tekrar okumakta, her 5 dakikada bir iç servis static cache dosyaları temizlenmekte, her 10 dakikada bir iç servis framework bilgileri sıfırlanmakta, framework view dosyaları için 5 dakikalık, templates dosyaları için 5 dakikalık, contents dosyaları için 5 dakikalık ve tüm static dosyalar için 5 dakikalık cache işlemi yapmaktadır.</p><footer style="position:fixed; font-size:.8em; text-align:right; bottom:0px; margin-left:-25px; height:20px; width:100%;">generated by <a href="http://pad.haroopress.com" target="_blank">haroopad</a></footer>
+</body>
+</html>
